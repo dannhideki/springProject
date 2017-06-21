@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Welcome Maguila!</h1>
+<h1>Welcome Maguila ${id }!</h1>
+<p>User-Agent : ${agent}</p>
+<p>Accept : ${accept}</p>
 </body>
 </html>

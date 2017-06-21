@@ -10,39 +10,54 @@
 </head>
 <body>
 	<h2>User Form</h2>
-	<form:form modelAttribute="user" action="${pageContext.request.contextPath}/user/save" method="GET">
-		<div>
+	<c:choose>
+		<c:when test="${user.id > 0}">
+			<c:set var="formMethod" value="PUT"></c:set>
+			<c:url var="formAction" value="/user/${user.id}"></c:url>
+		</c:when>
+		<c:otherwise>
+			<c:set var="formMethod" value="POST"></c:set>
+			<c:url var="formAction" value="/user"></c:url>
+		</c:otherwise>
+	</c:choose>
+	
+	<div class="container">
+	<form:form class="form col-sm-6" modelAttribute="user" action="${formAction}" method="${formMethod}">
+		<div class="form-group row">
 			<label>Name</label>
-			<form:input type="text" id="firstName" path="firstName" />
+			<form:input class="form-control" type="text" id="firstName" path="firstName" />
 		</div>
-		<div>
+		<div class="form-group row">
 			<label>Last Name</label>
-			<form:input path="lastName" />
+			<form:input class="form-control" path="lastName" />
 		</div>
-		<div>
+		<div class="form-group row">
 			<label>CPF</label>
-			<form:input path="cpf" />
+			<form:input class="form-control" path="cpf" />
 		</div>
-		<div>
-			<button type="submit">Salvar</button>		
+		<div class="form-group row">
+			<button class="btn btn-primary" type="submit">
+				<i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+			</button>		
 		</div>
 	</form:form>
-	
+	</div>
 	<h2>List of Users</h2>
-	<table>
+	<table class="table table-striped">
 		<tr>
 			<td>Name</td>
 			<td>Last Name</td>
 			<td>CPF</td>
+			<td>Edit</td>
 		</tr>
 		<c:forEach items="${users}" var="user">
 			<tr>
 				<td>${user.firstName}</td>
 				<td>${user.lastName}</td>
 				<td>${user.cpf}</td>
+				<td><a href="${pageContext.request.contextPath}/user/${user.id}">Edit</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-	
 </body>
 </html>
