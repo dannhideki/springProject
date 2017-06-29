@@ -1,10 +1,32 @@
 package br.com.season.springproject.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.br.CPF;
+
+@Entity
+@Table(name= "USER")
 public class User {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name = "LAST_NAME")
 	private String lastName;
+	
+	@Column(name = "FIRST_NAME")
 	private String firstName;
+	
+	@NotNull
+	@CPF(message = "Capiroto, digita direito...")
+	@Column(name = "CPF")
 	private String cpf;
 	
 	public Integer getId() {
