@@ -1,19 +1,10 @@
 package br.com.season.springproject.service;
 
-import java.util.List;
-
 import br.com.season.springproject.entity.User;
+import br.com.season.springproject.generic.JPAGeneric;
 
-public interface UserService {
+public interface UserService extends JPAGeneric<User>{
 	
-	User findById(Integer id);
-	
-	List<User> findAll();
-	
-	void save(User user);
-	
-	User update(Integer userId, User user);
-	
-	void delete(User user);
+	User findByCpf(String cpf);
 
 }
