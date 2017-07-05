@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,7 +74,30 @@ public class UserController {
 		return userService.findByCpf(cpf);
 	}
 	
+	@RequestMapping("/find-by")
+	public ModelAndView findBy(@RequestParam("lastName") String lastName,
+			@RequestParam("firstName") String firstName,
+			@RequestParam("cpf") String cpf,
+			ModelMap map
+			){
+		ModelAndView view = new ModelAndView("user");
+		List<User> users = userService.findBy(lastName, firstName, cpf);
+		map.addAttribute("user", new User());
+		map.addAttribute("users", users);
+		
+		return view;
+	}
 	
+	@RequestMapping("/delete/{userId}")
+	public String delete(@PathVariable("userId") Integer userId, ModelMap map){
+		User found = userService.findById(userId);
+		if(found != null){
+			userService.delete(found);
+		}
+		map.addAttribute("user", new User());
+		map.addAttribute("users", userService.findAll());
+		return "user";
+	}
 	
 	
 	

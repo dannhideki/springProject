@@ -27,8 +27,8 @@ public class User {
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 	
-	@NotNull
-	@CPF(message = "Capiroto, digita direito...")
+//	@NotNull
+//	@CPF(message = "Capiroto, digita direito...")
 	@Column(name = "CPF")
 	private String cpf;
 	

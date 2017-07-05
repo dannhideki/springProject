@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import br.com.season.springproject.entity.User;
@@ -48,4 +50,46 @@ public class UserDAOImpl implements UserDAO {
 				.getSingleResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findBy(String lastName, String firstName, String cpf) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append(" SELECT u FROM User u WHERE 1=1 ");
+		
+		if(StringUtils.isNotEmpty(lastName)){
+			sql.append(" AND u.lastName = :lastName ");
+		}
+		if(StringUtils.isNotEmpty(firstName)){
+			sql.append(" AND u.firstName = :firstName ");
+		}
+		if(StringUtils.isNotEmpty(cpf)){
+			sql.append(" AND u.cpf = :cpf ");
+		}
+		
+		Query query = em.createQuery(sql.toString());
+		
+		if(StringUtils.isNotEmpty(lastName)){
+			query.setParameter("lastName", lastName);
+		}
+		if(StringUtils.isNotEmpty(firstName)){
+			query.setParameter("firstName", firstName);
+		}
+		if(StringUtils.isNotEmpty(cpf)){
+			query.setParameter("cpf", cpf);
+		}
+		
+		return query.getResultList();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
