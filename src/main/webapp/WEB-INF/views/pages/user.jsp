@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -23,6 +24,9 @@
 		</c:otherwise>
 	</c:choose>
 	
+	
+	
+	<sec:authorize access="hasRole('ADMIN')">
 	<div class="container">
 	<form:form class="form col-sm-6" modelAttribute="user" action="${formAction}" method="${formMethod}">
 		<div class="form-group row">
@@ -37,6 +41,17 @@
 			<label><spring:message code="user.cpf" /></label>
 			<form:input class="form-control" path="cpf" />
 		</div>
+		
+		<div class="form-group row">
+			<label><spring:message code="user.username" /></label>
+			<form:input class="form-control" path="username" />
+		</div>
+		
+		<div class="form-group row">
+			<label><spring:message code="user.password" /></label>
+			<form:input type="password" class="form-control" path="password" />
+		</div>
+		
 		<div class="form-group row">
 			<button class="btn btn-primary" type="submit">
 				<i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
@@ -44,6 +59,10 @@
 		</div>
 	</form:form>
 	</div>
+	</sec:authorize>
+	
+	
+	
 	<h2>List of Users</h2>
 	
 	<form class="form-inline" action="${pageContext.request.contextPath}/user/find-by/">
@@ -86,16 +105,20 @@
 			</tr>
 			<div id="myModal_${user.id}" class="modal fade">
 				<div class="modal-dialog">
+				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title">Confirm Delete</h4>
 					</div>
-					
 					<div class="modal-body">
-						<button class="btn btn-default" data-dismiss="modal">Close</button>
+			                <p>Are you sure you want to delete this user? </p>
+			        </div>
+		            <div class="modal-footer">
+		                <button class="btn btn-default" data-dismiss="modal">Close</button>
 						<a href="${pageContext.request.contextPath}/user/delete/${user.id}"
-							class="btn btn-danger"
-						>Delete</a>
-					</div>
+						class="btn btn-danger"
+					>Delete</a>
+		            </div>
+				</div>
 				</div>
 			</div>
 		</c:forEach>
