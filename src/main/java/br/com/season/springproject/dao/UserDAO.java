@@ -13,4 +13,8 @@ public interface UserDAO extends JPAGeneric<User>{
 	List<User> findBy(String lastName, String firstName, String cpf);
 
 	User findUsername(String username);
+	
+	UserProfile findRoleById(Integer id);
+
+	List<UserProfile> findAllRoles();
 }

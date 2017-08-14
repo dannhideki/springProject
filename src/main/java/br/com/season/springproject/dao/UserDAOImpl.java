@@ -11,16 +11,22 @@ import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import br.com.season.springproject.entity.User;
+import br.com.season.springproject.entity.UserProfile;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
 	@Override
 	public User findById(Integer id) {
-		return em.find(User.class, id);
+		User user = em.find(User.class, id);
+
+		if(user != null){
+			Hibernate.initialize(user.getUserProfiles());
+		}
+		return user;
 	}
 
 	@Override
@@ -55,9 +61,9 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> findBy(String lastName, String firstName, String cpf) {
 		StringBuilder sql = new StringBuilder();
-		
+
 		sql.append(" SELECT u FROM User u WHERE 1=1 ");
-		
+
 		if(StringUtils.isNotEmpty(lastName)){
 			sql.append(" AND u.lastName = :lastName ");
 		}
@@ -67,9 +73,9 @@ public class UserDAOImpl implements UserDAO {
 		if(StringUtils.isNotEmpty(cpf)){
 			sql.append(" AND u.cpf = :cpf ");
 		}
-		
+
 		Query query = em.createQuery(sql.toString());
-		
+
 		if(StringUtils.isNotEmpty(lastName)){
 			query.setParameter("lastName", lastName);
 		}
@@ -79,7 +85,7 @@ public class UserDAOImpl implements UserDAO {
 		if(StringUtils.isNotEmpty(cpf)){
 			query.setParameter("cpf", cpf);
 		}
-		
+
 		return query.getResultList();
 	}
 
@@ -89,22 +95,20 @@ public class UserDAOImpl implements UserDAO {
 		User user = em.createQuery(sql, User.class)
 				.setParameter("username", username)
 				.getSingleResult();
-		
+
 		if(user != null){
 			Hibernate.initialize(user.getUserProfiles());
 		}
 		return user;
 	}
 
+	@Override
+	public UserProfile findRoleById(Integer id) {
+		return em.find(UserProfile.class, id);
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public List<UserProfile> findAllRoles() {
+		return em.createQuery("select p from UserProfile p", UserProfile.class).getResultList();
+	}
 }

@@ -43,6 +43,11 @@
 		</div>
 		
 		<div class="form-group row">
+				<label><spring:message code="user.dateBirth" /></label>
+				<form:input class="form-control" path="dateBirth" />
+		</div>
+		
+		<div class="form-group row">
 			<label><spring:message code="user.username" /></label>
 			<form:input class="form-control" path="username" />
 		</div>
@@ -50,6 +55,12 @@
 		<div class="form-group row">
 			<label><spring:message code="user.password" /></label>
 			<form:input type="password" class="form-control" path="password" />
+		</div>
+		
+		<div class="form-group row">
+			<label for="userProfile" ><spring:message code="user.role" /></label>
+			<form:select id="userProfile" path="userProfiles" items="${profiles}" multiple="true"
+					itemValue="id" itemLabel="type" class="form-control input-sm" />
 		</div>
 		
 		<div class="form-group row">

@@ -14,5 +14,7 @@ public interface UserService extends JPAGeneric<User>{
 
 	User findUsername(String username);
 
+	UserProfile findRoleById(Integer id);
 
+	List<UserProfile> findAllRoles();
 }

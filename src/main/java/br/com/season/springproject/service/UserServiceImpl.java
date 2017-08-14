@@ -62,13 +62,14 @@ public class UserServiceImpl implements UserService{
 	public User findUsername(String username) {
 		return userDAO.findUsername(username);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
+	@Override
+	public UserProfile findRoleById(Integer id) {
+		return userDAO.findRoleById(id);
+	}
+
+	@Override
+	public List<UserProfile> findAllRoles() {
+		return userDAO.findAllRoles();
+	}
 }

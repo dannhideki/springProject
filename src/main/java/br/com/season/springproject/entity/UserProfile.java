@@ -36,4 +36,9 @@ public class UserProfile {
 	public void setType(UserProfileType type) {
 		this.type = type;
 	}
+	
+    @Override
+    public String toString() {
+        return "UserProfile [id=" + id + ", type=" + type + "]";
+    }
 }

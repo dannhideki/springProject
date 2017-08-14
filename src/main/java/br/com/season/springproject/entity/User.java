@@ -1,5 +1,6 @@
 package br.com.season.springproject.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,9 @@ public class User {
 	
 	@Column(name = "FIRST_NAME")
 	private String firstName;
+	
+	@Column(name = "DATE_BIRTH")
+	private Date dateBirth;
 	
 //	@NotNull
 //	@CPF(message = "Capiroto, digita direito...")
@@ -120,6 +124,11 @@ public class User {
 	public void setUserProfiles(Set<UserProfile> userProfiles) {
 		this.userProfiles = userProfiles;
 	}
-	
-	
+	public Date getDateBirth() {
+		return dateBirth;
+	}
+	public void setDateBirth(Date dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+
 }
